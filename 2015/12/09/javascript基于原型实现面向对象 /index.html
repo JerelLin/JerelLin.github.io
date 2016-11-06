@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2016 | 秋天该很好 你若尚在场</title>
+    <title>javascript基于原型实现面向对象 | 秋天该很好 你若尚在场</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="秋天该很好 你若尚在场">
-<meta property="og:type" content="website">
-<meta property="og:title" content="秋天该很好 你若尚在场">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+    <meta property="og:type" content="article">
+<meta property="og:title" content="javascript基于原型实现面向对象">
+<meta property="og:url" content="http://yoursite.com/2015/12/09/javascript基于原型实现面向对象 /index.html">
 <meta property="og:site_name" content="秋天该很好 你若尚在场">
-<meta property="og:description" content="秋天该很好 你若尚在场">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg">
+<meta property="og:updated_time" content="2016-11-06T08:13:18.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="秋天该很好 你若尚在场">
-<meta name="twitter:description" content="秋天该很好 你若尚在场">
+<meta name="twitter:title" content="javascript基于原型实现面向对象">
+<meta name="twitter:image" content="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg">
     
 
     
@@ -183,169 +183,205 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2016</h1>
-            </div>
+            <section id="main"><article id="post-javascript基于原型实现面向对象 " class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/04/29/记、基于react-router的单页应用 /">记、基于react-router的单页应用</a>
+        <h1 class="article-title" itemprop="name">
+            javascript基于原型实现面向对象
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/04/29/记、基于react-router的单页应用 /">
-            <time datetime="2016-04-29T02:39:00.000Z" itemprop="datePublished">2016-04-29</time>
+        <a href="/2015/12/09/javascript基于原型实现面向对象 /">
+            <time datetime="2015-12-09T14:36:00.000Z" itemprop="datePublished">2015-12-09</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
         <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/04/01/ 冒泡排序算法可视化 /">冒泡排序算法可视化</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" alt=""></p>
+<a id="more"></a>
+<p>传统的OO语言有类的概念，基于类实现面向对象，但javascript（ES5）却是基于原型实现的面向对象。</p>
+<p>那…原型是？</p>
+<p>我们创建的每一个函数都会有一个原型（prototype）属性，这个属性是一个指针，指向函数的原型（prototype）对象。使用原型对象可以让构造函数的实例对象共享原型对象包含的属性和方法，而不会像工厂模式或者构造函数模式那样，方法本应该是可以是通用的，可是每一个创建的对象实例都要各自复制一份。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> People(name)&#123;</div><div class="line">    this.name=name;</div><div class="line">    this.sayName=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">        console.log(<span class="string">"Hi! my name is "</span>+this.name);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var Kelly=new People(<span class="string">"Kelly"</span>);</div><div class="line">var AsenZ=new People(<span class="string">"AsenZ"</span>);</div><div class="line"></div><div class="line">console.log(Kelly.sayName==AsenZ.sayName);  //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<p>但使用原型模式的话，同一个方法是被不同对象实例所引用的，上面的结果会返回ture。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> People(name)&#123;</div><div class="line">    this.name=name;</div><div class="line">&#125;</div><div class="line">People.prototype.sayName=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"Hi! my name is "</span>+this.name);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var Kelly=new People(<span class="string">"Kelly"</span>);</div><div class="line">var AsenZ=new People(<span class="string">"AsenZ"</span>);</div><div class="line"></div><div class="line">console.log(Kelly.sayName==AsenZ.sayName);  //<span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>构造函数实例化的过程中发生了什么？</p>
+<p>构造函数通过new操作符实例化的每一个对象，都会生成一个指向构造函数原型对象的指针，不过在这里不是prototype（构造函数通过prototype指针指向原型对象），而是[[ prototype ]], 同时构造函数内部的this指针会绑定到该对象实例上。</p>
+<p>构造函数内部绑定在this指针下的所有属性或者方法会被复制下来，作为实例对象的一部分，但是呢原型中定义的属性和方法仍是属于原型自身的，不归对象实例所有。对象只是引用。对象在调用一个属性或者方法时，如果在构造函数内部没有相应的定义，则会通过[[prototype]]指针去原型对象中寻找。</p>
+<p>继承 — 借用构造函数</p>
+<p>如果需要继承构造函数内部this指针所绑定的所有属性和方法的话，可以在子构造函数中使用call方法，call方法的第一个参数会传入一个对象，这个对象会用来替换调用call方法的方法中的this，所以我们call方法的第一个参数可以传入子构造函数内部的this指针。</p>
+<p>但是这种方法却继承不了原型内部的属性和方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">function</span> People(name)&#123;</div><div class="line">    this.name=name;</div><div class="line">&#125;</div><div class="line">People.prototype.sayName=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"Hi! my name is "</span>+this.name);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">function</span> Boy(name)&#123;</div><div class="line">    People.call(this,name);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var Kelly=new Boy(<span class="string">"Kelly"</span>);</div><div class="line"></div><div class="line">console.log(Kelly.name);        //Kelly</div><div class="line">console.log(Kelly.sayName);     //undefined</div></pre></td></tr></table></figure>
+<p>可是如果需要继承原型对象的内部属性和方法的话呢？— 组合继承（借用构造函数+原型链）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">function</span> People(name)&#123;</div><div class="line">    this.name=name;</div><div class="line">&#125;</div><div class="line">People.prototype.sayName=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"Hi! my name is "</span>+this.name);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">function</span> Boy(name)&#123;</div><div class="line">    People.call(this,name);</div><div class="line">&#125;</div><div class="line">Boy.prototype=new People();</div><div class="line">Boy.prototype.constructor=Boy;</div><div class="line"></div><div class="line">var Kelly=new Boy(<span class="string">"Kelly"</span>);</div><div class="line"></div><div class="line">console.log(Kelly.name);            //Kelly</div><div class="line">Kelly.sayName();                    //Hi! my name is Kelly</div></pre></td></tr></table></figure>
+<p>还有不少其他的实现继承的方法，不过感觉思路差不了多少的，这一篇总结主要是为了加深一下自己对原型的理解。</p>
+<p>虽然说有了babel，现在ES6已经可以放开的使用了！class定义类，extends实现继承不能再爽，但是这些新特性也不过是语法糖，底层的原理还是离不开最基本的原型。</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/04/01/ 冒泡排序算法可视化 /">
-            <time datetime="2016-04-01T13:43:00.000Z" itemprop="datePublished">2016-04-01</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/03/29/ closure！ /">closure！</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/03/29/ closure！ /">
-            <time datetime="2016-03-29T10:38:00.000Z" itemprop="datePublished">2016-03-29</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
-    </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/">Nodejs爬虫进阶=&gt;异步并发控制</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/">
-            <time datetime="2016-02-06T04:21:00.000Z" itemprop="datePublished">2016-02-06</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/">一个用 react+nodejs 实现的笔记本小应用</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/">
-            <time datetime="2016-02-01T15:38:00.000Z" itemprop="datePublished">2016-02-01</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://yoursite.com/2015/12/09/javascript基于原型实现面向对象 /#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2015/12/09/javascript基于原型实现面向对象 /">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    一个用 react+nodejs 实现的笔记本小应用
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/10/16/用css画出对话框/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">使用 CSS 画出对话框</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2015/12/09/javascript基于原型实现面向对象 /" data-title="javascript基于原型实现面向对象" data-url="http://yoursite.com/2015/12/09/javascript基于原型实现面向对象 /"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">

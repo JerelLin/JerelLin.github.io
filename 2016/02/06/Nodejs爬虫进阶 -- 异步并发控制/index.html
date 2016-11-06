@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Nodejs爬虫进阶=&gt;异步并发控制 | 秋天该很好 你若尚在场</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs爬虫进阶=>异步并发控制">
+<meta property="og:url" content="http://yoursite.com/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/index.html">
+<meta property="og:site_name" content="秋天该很好 你若尚在场">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/132156456456.jpg">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206110919569-1814749256.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206111748069-726993668.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206112026975-1290717680.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206114958819-1416222622.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206120522054-1476056076.png">
+<meta property="og:updated_time" content="2016-11-06T08:48:41.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs爬虫进阶=>异步并发控制">
+<meta name="twitter:image" content="http://7xteli.com1.z0.glb.clouddn.com/132156456456.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5555.jpg" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">秋天该很好 你若尚在场</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/archives">文章存档</a>
+                
+                    <a class="main-nav-link" href="/categories">次元空间</a>
+                
+                    <a class="main-nav-link" href="/tags">云之世界</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/archives">文章存档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">次元空间</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">云之世界</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+            <h2 id="name">晚秋</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/KellyLy">喜欢</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                7
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/KellyLy" target="_blank" title="github" >
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="http://weibo.com/u/2438038584/home?wvr=5" target="_blank" title="weibo" >
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=282 height=86 src="http://music.163.com/outchain/player?type=2&id=187341&auto=1&height=66"></iframe>
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Nodejs爬虫进阶 -- 异步并发控制" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Nodejs爬虫进阶=&gt;异步并发控制
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/">
+            <time datetime="2016-02-06T04:21:00.000Z" itemprop="datePublished">2016-02-06</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://7xteli.com1.z0.glb.clouddn.com/132156456456.jpg" alt=""></p>
+<a id="more"></a>
+<p>之前写了个现在看来很不完美的小爬虫，很多地方没有处理好，比如说在知乎点开一个问题的时候，它的所有回答并不是全部加载好了的，当你拉到回答的尾部时，点击加载更多，回答才会再加载一部分，所以说如果直接发送一个问题的请求链接，取得的页面是不完整的。还有就是我们通过发送链接下载图片的时候，是一张一张来下的，如果图片数量太多的话，真的是下到你睡完觉它还在下，而且我们用nodejs写的爬虫，却竟然没有用到nodejs最牛逼的异步并发的特性，太浪费了啊。</p>
+<p>思路</p>
+<p>这次的的爬虫是上次那个的升级版，不过呢，上次那个虽然是简单，但是很适合新手学习啊。这次的爬虫代码在我的github上可以找到=&gt;<a href="https://github.com/KellyLy/NodeSpider。" target="_blank" rel="external">https://github.com/KellyLy/NodeSpider。</a></p>
+<p>整个爬虫的思路是这样的：在一开始我们通过请求问题的链接抓取到部分页面数据，接下来我们在代码中模拟ajax请求截取剩余页面的数据，当然在这里也是可以通过异步来实现并发的，对于小规模的异步流程控制，可以用这个模块=&gt;eventproxy，但这里我就没有用啦！我们通过分析获取到的页面从中截取出所有图片的链接，再通过异步并发来实现对这些图片的批量下载。</p>
+<p>抓取页面初始的数据很简单啊，这里就不做多解释啦</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*获取首屏所有图片链接*/</div><div class="line">var getInitUrlList=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    request.get(<span class="string">"https://www.zhihu.com/question/34937418"</span>)</div><div class="line">            .end(<span class="keyword">function</span>(err,res)&#123;</div><div class="line">                <span class="keyword">if</span>(err)&#123;</div><div class="line">                    console.log(err);</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    var $=cheerio.load(res.text);</div><div class="line">                    var answerList=$(<span class="string">".zm-item-answer"</span>);</div><div class="line">                    answerList.map(<span class="keyword">function</span>(i,answer)&#123;</div><div class="line">                        var images=$(answer).find(<span class="string">'.zm-item-rich-text img'</span>);</div><div class="line">                        images.map(<span class="keyword">function</span>(i,image)&#123;</div><div class="line">                            photos.push($(image).attr(<span class="string">"src"</span>));</div><div class="line">                        &#125;);</div><div class="line">                    &#125;);</div><div class="line">                    console.log(<span class="string">"已成功抓取"</span>+photos.length+<span class="string">"张图片的链接"</span>);</div><div class="line">                    getIAjaxUrlList(20);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>模拟ajax请求获取完整页面<br>接下来就是怎么去模拟点击加载更多时发出的ajax请求了，去知乎看一下吧！</p>
+<p><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206110919569-1814749256.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206111748069-726993668.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206112026975-1290717680.png" alt=""></p>
+<p>有了这些信息，就可以来模拟发送相同的请求来获得这些数据啦。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*每隔100毫秒模拟发送ajax请求，并获取请求结果中所有的图片链接*/</div><div class="line">var getIAjaxUrlList=<span class="keyword">function</span>(offset)&#123;</div><div class="line">    request.post(<span class="string">"https://www.zhihu.com/node/QuestionAnswerListV2"</span>)</div><div class="line">            .set(config)</div><div class="line">                .send(<span class="string">"method=next&amp;params=%7B%22url_token%22%3A34937418%2C%22pagesize%22%3A20%2C%22offset%22%3A"</span> +offset+ <span class="string">"%7D&amp;_xsrf=98360a2df02783902146dee374772e51"</span>)</div><div class="line">                    .end(<span class="keyword">function</span>(err,res)&#123;</div><div class="line">                        <span class="keyword">if</span>(err)&#123;</div><div class="line">                            console.log(err);</div><div class="line">                        &#125;<span class="keyword">else</span>&#123;</div><div class="line">                            var response=JSON.parse(res.text);/*想用json的话对json序列化即可，提交json的话需要对json进行反序列化*/</div><div class="line">                            <span class="keyword">if</span>(response.msg&amp;&amp;response.msg.length)&#123;</div><div class="line">                                var $=cheerio.load(response.msg.join(<span class="string">""</span>));/*把所有的数组元素拼接在一起，以空白符分隔，不要这样join()，它会默认数组元素以逗号分隔*/</div><div class="line">                                var answerList=$(<span class="string">".zm-item-answer"</span>);</div><div class="line">                                answerList.map(<span class="keyword">function</span>(i,answer)&#123;</div><div class="line">                                    var images=$(answer).find(<span class="string">'.zm-item-rich-text img'</span>);</div><div class="line">                                    images.map(<span class="keyword">function</span>(i,image)&#123;</div><div class="line">                                        photos.push($(image).attr(<span class="string">"src"</span>));</div><div class="line">                                    &#125;);</div><div class="line">                                &#125;);</div><div class="line">                                <span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                                    offset+=20;</div><div class="line">                                    console.log(<span class="string">"已成功抓取"</span>+photos.length+<span class="string">"张图片的链接"</span>);</div><div class="line">                                    getIAjaxUrlList(offset);</div><div class="line">                                &#125;,100);</div><div class="line">                            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                                console.log(<span class="string">"图片链接全部获取完毕，一共有"</span>+photos.length+<span class="string">"条图片链接"</span>);</div><div class="line">                                // console.log(photos);</div><div class="line">                                <span class="built_in">return</span> downloadImg(50);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在代码中post这条请求  <a href="https://www.zhihu.com/node/QuestionAnswerListV2" target="_blank" rel="external">https://www.zhihu.com/node/QuestionAnswerListV2</a>,  把原请求头和请求参数复制下来，作为我们的请求头和请求参数，superagent的set方法可用来设置请求头，send方法可以用来发送请求参数。我们把请求参数中的offset初始为20，每隔一定时间offset再加20，再重新发送请求，这样就相当于我们每隔一定时间发送了一条ajax请求，获取到最新的20条数据，每获取到了数据，我们再对这些数据进行一定的处理，让它们变成一整段的html，便于后面的提取链接处理。</p>
+<p>异步并发控制下载图片<br>再获取完了所有的图片链接之后，即判定response.msg为空时，我们就要对这些图片进行下载了，不可能一条一条下对不对，因为如你所看到的，我们的图片足足有</p>
+<p><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206114958819-1416222622.png" alt=""></p>
+<p>没错，2万多张，不过幸好nodejs拥有神奇的单线程异步特性，我们可以同时对这些图片进行下载。但这个时候问题来了，听说同时发送请求太多的话会被网站封ip哒！这是真的吗？我不知道啊，没试过，因为我也不想去试(￣ー￣〃)，所以这个时候我们就需要对异步并发数量进行一些控制了。</p>
+<p>在这里用到了一个神奇的模块=&gt;async，它不仅能帮我们拜托难以维护的回调金字塔恶魔，还能轻松的帮我们进行异步流程的管理。具体看文档啦，因为我自己也不怎么会用，这里就只用到了一个强大的async.mapLimit方法。真的很厉害哦。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var requestAndwrite=<span class="keyword">function</span>(url,callback)&#123;</div><div class="line">    request.get(url).end(<span class="keyword">function</span>(err,res)&#123;</div><div class="line">        <span class="keyword">if</span>(err)&#123;</div><div class="line">            console.log(err);</div><div class="line">            console.log(<span class="string">"有一张图片请求失败啦..."</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            var fileName=path.basename(url);</div><div class="line">            fs.writeFile(<span class="string">"./img1/"</span>+fileName,res.body,<span class="keyword">function</span>(err)&#123;</div><div class="line">                <span class="keyword">if</span>(err)&#123;</div><div class="line">                    console.log(err);</div><div class="line">                    console.log(<span class="string">"有一张图片写入失败啦..."</span>);</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    console.log(<span class="string">"图片下载成功啦"</span>);</div><div class="line">                    callback(null,<span class="string">"successful !"</span>);</div><div class="line">                    /*callback貌似必须调用，第二个参数将传给下一个回调函数的result，result是一个数组*/</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var downloadImg=<span class="keyword">function</span>(asyncNum)&#123;</div><div class="line">    /*有一些图片链接地址不完整没有“http:”头部,帮它们拼接完整*/</div><div class="line">    <span class="keyword">for</span>(var i=0;i&lt;photos.length;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(photos[i].indexOf(<span class="string">"http"</span>)===-1)&#123;</div><div class="line">            photos[i]=<span class="string">"http:"</span>+photos[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    console.log(<span class="string">"即将异步并发下载图片，当前并发数为:"</span>+asyncNum);</div><div class="line">    async.mapLimit(photos,asyncNum,<span class="keyword">function</span>(photo,callback)&#123;</div><div class="line">        console.log(<span class="string">"已有"</span>+asyncNum+<span class="string">"张图片进入下载队列"</span>);</div><div class="line">        requestAndwrite(photo,callback);</div><div class="line">    &#125;,<span class="keyword">function</span>(err,result)&#123;</div><div class="line">        <span class="keyword">if</span>(err)&#123;</div><div class="line">            console.log(err);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            // console.log(result);&lt;=会输出一个有2万多个“successful”字符串的数组</div><div class="line">            console.log(<span class="string">"全部已下载完毕！"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>先看这里=&gt;</p>
+<p><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160206120522054-1476056076.png" alt=""></p>
+<p>mapLimit方法的第一个参数photos是所有图片链接的数组，也是我们并发请求的对象，asyncNum是限制并发请求的数量，如果没有这个参数的话，将会有同时两万多条请求发送过去，嗯，你的ip就会被成功的封掉，但当我们有这个参数时，比如它的值是10，则它一次就只会帮我们从数组中取10条链接，执行并发的请求，这10条请求都得到响应后，再发送下10条请求。告诉泥萌，并发到同时100条没有事的，下载速度超级快，再往上就不知道咯，你们来告诉我…</p>
+<p>结尾</p>
+<p>哦哦~，明天就是除夕了~</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://yoursite.com/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/03/29/ closure！ /" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    closure！
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">一个用 react+nodejs 实现的笔记本小应用</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" data-title="Nodejs爬虫进阶=&gt;异步并发控制" data-url="http://yoursite.com/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/29/记、基于react-router的单页应用 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/29/记、基于react-router的单页应用 /" class="title">记、基于react-router的单页应用</a></p>
+                            <p class="item-date"><time datetime="2016-04-29T02:39:00.000Z" itemprop="datePublished">2016-04-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/01/ 冒泡排序算法可视化 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/01/ 冒泡排序算法可视化 /" class="title">冒泡排序算法可视化</a></p>
+                            <p class="item-date"><time datetime="2016-04-01T13:43:00.000Z" itemprop="datePublished">2016-04-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/03/29/ closure！ /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/03/29/ closure！ /" class="title">closure！</a></p>
+                            <p class="item-date"><time datetime="2016-03-29T10:38:00.000Z" itemprop="datePublished">2016-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="title">Nodejs爬虫进阶=&gt;异步并发控制</a></p>
+                            <p class="item-date"><time datetime="2016-02-06T04:21:00.000Z" itemprop="datePublished">2016-02-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="title">一个用 react+nodejs 实现的笔记本小应用</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T15:38:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.douban.com/people/100011346/">豆瓣</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 晚秋<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kelly'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

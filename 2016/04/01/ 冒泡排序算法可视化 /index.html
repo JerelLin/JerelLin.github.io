@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>冒泡排序算法可视化 | 秋天该很好 你若尚在场</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="article">
+<meta property="og:title" content="冒泡排序算法可视化">
+<meta property="og:url" content="http://yoursite.com/2016/04/01/ 冒泡排序算法可视化 /index.html">
+<meta property="og:site_name" content="秋天该很好 你若尚在场">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/14349041.jpg">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160401213726457-1740487717.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160401213742519-80547299.png">
+<meta property="og:updated_time" content="2016-11-06T09:15:53.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="冒泡排序算法可视化">
+<meta name="twitter:image" content="http://7xteli.com1.z0.glb.clouddn.com/14349041.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5555.jpg" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">秋天该很好 你若尚在场</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/archives">文章存档</a>
+                
+                    <a class="main-nav-link" href="/categories">次元空间</a>
+                
+                    <a class="main-nav-link" href="/tags">云之世界</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/archives">文章存档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">次元空间</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">云之世界</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+            <h2 id="name">晚秋</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/KellyLy">喜欢</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                7
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/KellyLy" target="_blank" title="github" >
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="http://weibo.com/u/2438038584/home?wvr=5" target="_blank" title="weibo" >
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=282 height=86 src="http://music.163.com/outchain/player?type=2&id=187341&auto=1&height=66"></iframe>
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post- 冒泡排序算法可视化 " class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            冒泡排序算法可视化
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/04/01/ 冒泡排序算法可视化 /">
+            <time datetime="2016-04-01T13:43:00.000Z" itemprop="datePublished">2016-04-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://7xteli.com1.z0.glb.clouddn.com/14349041.jpg" alt=""></p>
+<a id="more"></a>
+<p>在百度前端技术学院的任务列表那里看到了有一个任务是要求用javascript实现可视化的排序算法，感觉很有趣，就稍微研究了一下.</p>
+<p>冒泡排序原理</p>
+<p>冒泡排序我们应该都不陌生吧？很简单的两个for循环就可以实现了，其基本原理是：在一开始的时候，比较第一第二个数，如果如果第一个数比第二个数大的话则交换二者位置，在比较第二个和第三个数，同样的如果第二个数比第三个数大的话，则交换二者位置，如此重复，所以一趟比较下来就能筛选出最大的一个数并把它排在最后的位置，又因为一个for循环的话只能选出一个最大的数，而我们还需要选出第二大、第三大…到最小的数，所以还需要加一个for循环才能实现我们的目标。用javascript实现就是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*冒泡排序*/</div><div class="line"><span class="keyword">function</span> bubbleSort(arr)&#123;</div><div class="line">    <span class="keyword">if</span>(arr.length&lt;=1)&#123;</div><div class="line">        <span class="built_in">return</span> arr;</div><div class="line">    &#125;;</div><div class="line">    var temp=0;</div><div class="line">    <span class="keyword">for</span>(var i=0; i&lt;arr.length; i++)&#123;</div><div class="line">        <span class="keyword">for</span>(var j=0; j&lt;arr.length-i-1; j++)&#123;</div><div class="line">            <span class="keyword">if</span>(arr[j]&gt;arr[j+1])&#123;</div><div class="line">                temp=arr[j];</div><div class="line">                arr[j]=arr[j+1];</div><div class="line">                arr[j+1]=temp;</div><div class="line">            &#125;;</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line">    <span class="built_in">return</span> arr;</div><div class="line">&#125;；</div></pre></td></tr></table></figure></p>
+<p>可视化原理</p>
+<p>接下来就是要用可视化的方式把排序的过程展现出来了。我们可以用这两种方法去实现它：</p>
+<p>1 排序的每一步结束后，我们让程序暂停一下运行（javascript没有sleep函数，我们需要自己去实现它），这样子的话，在我们看来排序的过程就是一步一步的进行的，就不会一瞬间就排序结束了。</p>
+<p>2 我们可以通过维护一个数组，把每一次排序之后的数组保存起来，在排序算法结束之后，我们再把保存的每一个数组依次绘制出来。我这里的实现用的就是这种方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var snapshots=[];                                    　　　　　　　　 //快照集合</div><div class="line">var timer=null;                                        　　　　　　　 //定时                        </div><div class="line">var arr=[50,21,5,89,13,35,69,44,60,15,51,80,55,71];                 //排序数组</div><div class="line">/*冒泡排序*/</div><div class="line"><span class="keyword">function</span> bubbleSort(arr)&#123;</div><div class="line">    <span class="keyword">if</span>(arr.length&lt;=1)&#123;</div><div class="line">        <span class="built_in">return</span> arr;</div><div class="line">    &#125;;</div><div class="line">    var temp=0;</div><div class="line">    <span class="keyword">for</span>(var i=0; i&lt;arr.length; i++)&#123;</div><div class="line">        <span class="keyword">for</span>(var j=0; j&lt;arr.length-i-1; j++)&#123;</div><div class="line">            <span class="keyword">if</span>(arr[j]&gt;arr[j+1])&#123;</div><div class="line">                temp=arr[j];</div><div class="line">                arr[j]=arr[j+1];</div><div class="line">                arr[j+1]=temp;</div><div class="line">                snapshots.push(JSON.parse(JSON.stringify(arr)));    //&lt;=记录下快照</div><div class="line">            &#125;;</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line">    <span class="built_in">return</span> arr;</div><div class="line">&#125;;</div><div class="line">Array.prototype.bubbleSort=<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    <span class="built_in">return</span> bubbleSort(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们设置一个snapshots数组变量，用于记录下每一次排序之后数组的快照，等排序结束之后，我们就能得到一组记录下完整的排序过程的数组的快照了，这个时候我们再按照一定的时间间隔依次把这些快照绘制出来，就能实现出排序过程的可视化了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*绘图*/</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">painting</span></span>()&#123;</div><div class="line">    var container=document.getElementById(<span class="string">"container"</span>);</div><div class="line">    var bars=[].slice.call( document.querySelectorAll(<span class="string">".bar"</span>) );           //将所有bar元素的集合转换为数组对象</div><div class="line">    <span class="keyword">for</span>(var i=0;i&lt;arr.length;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(bars.length!=arr.length)&#123;</div><div class="line">            var bar=document.createElement(<span class="string">"div"</span>);</div><div class="line">            bar.className=<span class="string">"bar"</span>;</div><div class="line">            container.appendChild(bar);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="built_in">break</span>;                                　　　　　　　　　　　　　　 //当bar的数量等于数组的长度时，停止创建bar元素</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line">    var snapshot=snapshots.shift() || [];                        　　　　　 //取出快照记录数组中的第一条记录</div><div class="line">    console.log(snapshot);</div><div class="line">    <span class="keyword">if</span>(snapshot.length!=0)&#123;</div><div class="line">        <span class="keyword">for</span>(var i=0; i&lt;bars.length; i++)&#123;</div><div class="line">            bars[i].innerHTML=snapshot[i];</div><div class="line">            bars[i].style.height=snapshot[i]*5+<span class="string">"px"</span>;</div><div class="line">            bars[i].style.left=(i+1)*50+<span class="string">"px"</span>;</div><div class="line">        &#125;;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        clearInterval(timer);                            　　　　　　　　　　//绘制结束</div><div class="line">        <span class="built_in">return</span>;</div><div class="line">    &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">arr.bubbleSort();                                    　　　　　　　　　　　　//排序</div><div class="line">timer=<span class="built_in">set</span>Interval(painting,200);                                　　　　　 //定时绘制</div></pre></td></tr></table></figure>
+<p><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160401213726457-1740487717.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160401213742519-80547299.png" alt=""></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://yoursite.com/2016/04/01/ 冒泡排序算法可视化 /#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2016/04/01/ 冒泡排序算法可视化 /">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/04/29/记、基于react-router的单页应用 /" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    记、基于react-router的单页应用
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/03/29/ closure！ /" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">closure！</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/04/01/ 冒泡排序算法可视化 /" data-title="冒泡排序算法可视化" data-url="http://yoursite.com/2016/04/01/ 冒泡排序算法可视化 /"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/29/记、基于react-router的单页应用 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/29/记、基于react-router的单页应用 /" class="title">记、基于react-router的单页应用</a></p>
+                            <p class="item-date"><time datetime="2016-04-29T02:39:00.000Z" itemprop="datePublished">2016-04-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/01/ 冒泡排序算法可视化 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/01/ 冒泡排序算法可视化 /" class="title">冒泡排序算法可视化</a></p>
+                            <p class="item-date"><time datetime="2016-04-01T13:43:00.000Z" itemprop="datePublished">2016-04-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/03/29/ closure！ /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/03/29/ closure！ /" class="title">closure！</a></p>
+                            <p class="item-date"><time datetime="2016-03-29T10:38:00.000Z" itemprop="datePublished">2016-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="title">Nodejs爬虫进阶=&gt;异步并发控制</a></p>
+                            <p class="item-date"><time datetime="2016-02-06T04:21:00.000Z" itemprop="datePublished">2016-02-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="title">一个用 react+nodejs 实现的笔记本小应用</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T15:38:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.douban.com/people/100011346/">豆瓣</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 晚秋<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kelly'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

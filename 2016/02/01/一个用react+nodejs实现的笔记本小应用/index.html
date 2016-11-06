@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>一个用 react+nodejs 实现的笔记本小应用 | 秋天该很好 你若尚在场</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="article">
+<meta property="og:title" content="一个用 react+nodejs 实现的笔记本小应用">
+<meta property="og:url" content="http://yoursite.com/2016/02/01/一个用react+nodejs实现的笔记本小应用/index.html">
+<meta property="og:site_name" content="秋天该很好 你若尚在场">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/962bd40735fae6cd28b00ec70fb30f2442a70f0b.jpg">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223319679-457560584.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223351694-1142053874.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223449944-168637839.png">
+<meta property="og:image" content="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223524366-64482205.png">
+<meta property="og:updated_time" content="2016-11-06T08:32:53.271Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个用 react+nodejs 实现的笔记本小应用">
+<meta name="twitter:image" content="http://7xteli.com1.z0.glb.clouddn.com/962bd40735fae6cd28b00ec70fb30f2442a70f0b.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5555.jpg" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">秋天该很好 你若尚在场</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/archives">文章存档</a>
+                
+                    <a class="main-nav-link" href="/categories">次元空间</a>
+                
+                    <a class="main-nav-link" href="/tags">云之世界</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/archives">文章存档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">次元空间</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">云之世界</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://7xteli.com1.z0.glb.clouddn.com/2e738bd4b31c8701c2b52834257f9e2f0608ffe5.jpg" />
+            <h2 id="name">晚秋</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/KellyLy">喜欢</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                7
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/KellyLy" target="_blank" title="github" >
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="http://weibo.com/u/2438038584/home?wvr=5" target="_blank" title="weibo" >
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=282 height=86 src="http://music.163.com/outchain/player?type=2&id=187341&auto=1&height=66"></iframe>
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-一个用react+nodejs实现的笔记本小应用" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            一个用 react+nodejs 实现的笔记本小应用
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/">
+            <time datetime="2016-02-01T15:38:00.000Z" itemprop="datePublished">2016-02-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://7xteli.com1.z0.glb.clouddn.com/962bd40735fae6cd28b00ec70fb30f2442a70f0b.jpg" alt=""></p>
+<a id="more"></a>
+<p>寒假回家产品经理一直叮嘱着要继续做学校团队的辣个项目，但是…，我到现在一点都还没做，而且还销声匿迹躲了起来藏了几天，是的我干了票大的，偷偷的在项目上用了一些现在比较潮流的新技术，所以这几天一直在偷偷摸摸的做一些不相干的东西，不知道产品经理知道了会不会砍我… 现在这个就是我昨天做的又一个不务正业的小东西</p>
+<p>这里应该有一段严肃的说明</p>
+<p>-应用功能</p>
+<p>1 添加笔记</p>
+<p>2 删除笔记</p>
+<p>3 显示和隐藏表单</p>
+<p>好吧⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄.我承认这功能确实是太简单了…</p>
+<p>=&gt;github完整版：<a href="https://github.com/KellyLy/react-note" target="_blank" rel="external">https://github.com/KellyLy/react-note</a></p>
+<p>献上各种效果图(因为这样博客看起来会比较长⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄)：</p>
+<p><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223319679-457560584.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223351694-1142053874.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223449944-168637839.png" alt=""><br><img src="http://7xteli.com1.z0.glb.clouddn.com/787292-20160201223524366-64482205.png" alt=""></p>
+<p>实现思路</p>
+<p>技术上前端用的是react框架+webpack作为构建工具，后台用的nodejs和mongodb。</p>
+<p>总的实现思路是这样的：利用了react当state改变会自动调用this.render方法重新渲染视图的特点，我在整个应用组件didMounted的时候，通过ajax从数据库拿到notes笔记记录把它们和state绑定在一起，所以当数据改变的时候state也会改变，state一改变视图重新被渲染，所以在添加删除笔记的时候页面表现的很流畅，你不需要显式的去进行各种dom操作，因为这个过程react通过虚拟dom帮我们解决了，这也是我觉得react做的非常棒的地方。</p>
+<p>源码</p>
+<p>页面被拆分为多个子组件和一个包含这些子组件的父组件。</p>
+<p>这是父组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">import React from <span class="string">"react"</span>;</div><div class="line">import ReactDOM from <span class="string">"react-dom"</span>;</div><div class="line">import $ from <span class="string">"./jquery.min.js"</span>;</div><div class="line">import Notes_header from <span class="string">"./Notes_header.jsx"</span>;</div><div class="line">import Notes_form from <span class="string">"./Notes_form.jsx"</span>;</div><div class="line">import Notes_list from <span class="string">"./Notes_list.jsx"</span>;</div><div class="line"></div><div class="line">class Notes extends React.Component&#123;</div><div class="line">    constructor(props)&#123;</div><div class="line">        super(props);</div><div class="line">        this.state=&#123;</div><div class="line">            notes : [],</div><div class="line">            formDisplayed : <span class="literal">false</span></div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">componentDidMount</span></span>()&#123;</div><div class="line">        $.ajax(&#123;</div><div class="line">            url : <span class="string">"/init"</span>,</div><div class="line">            <span class="built_in">type</span> : <span class="string">"get"</span>,</div><div class="line">            dataType : <span class="string">"json"</span>,</div><div class="line">            cache : <span class="literal">false</span>,</div><div class="line">            success : <span class="keyword">function</span>(notes)&#123;</div><div class="line">                /*notes是从数据库读取到的笔记数组*/</div><div class="line">                // console.log(<span class="string">"请求成功了！！但是...数据呢？..."</span>);</div><div class="line">                notes=this.notesSort(notes);</div><div class="line">                this.setState(&#123;</div><div class="line">                    notes: notes</div><div class="line">                &#125;);</div><div class="line">                // console.log(this.state.notes);</div><div class="line">            &#125;.bind(this),</div><div class="line">            error : <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                console.log(<span class="string">"视图渲染失败..."</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">onToggleForm</span></span>()&#123;</div><div class="line">        this.setState(&#123;</div><div class="line">            formDisplayed : !this.state.formDisplayed</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    onNewNote(newNote)&#123;</div><div class="line">        // console.log(JSON.stringify(newNote));</div><div class="line">        $.ajax(&#123;</div><div class="line">            url : <span class="string">"/addNote"</span>,</div><div class="line">            <span class="built_in">type</span> : <span class="string">"post"</span>,</div><div class="line">            contentType : <span class="string">"application/json; charset=utf-8"</span>,</div><div class="line">            dataType : <span class="string">"json"</span>,</div><div class="line">            data : JSON.stringify(newNote),/*反序列化，到了服务端再被bodypaser.json（）序列化*/</div><div class="line">            cache : <span class="literal">false</span>,</div><div class="line">            success : <span class="keyword">function</span>(notes)&#123;</div><div class="line">                console.log(<span class="string">"笔记添加成功！"</span>);</div><div class="line">                notes=this.notesSort(notes);</div><div class="line">                this.setState(&#123;</div><div class="line">                    notes:notes</div><div class="line">                &#125;);</div><div class="line">            &#125;.bind(this),</div><div class="line">            error : <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                console.log(<span class="string">"失败..."</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    onDeleteNote(date)&#123;/*根据日期来删除笔记*/</div><div class="line">        var delete_date=&#123;</div><div class="line">            date : date</div><div class="line">        &#125;;</div><div class="line">        console.log(JSON.stringify(delete_date));</div><div class="line">        $.ajax(&#123;</div><div class="line">            url : <span class="string">"/deleteNote"</span>,</div><div class="line">            <span class="built_in">type</span> : <span class="string">"post"</span>,</div><div class="line">            contentType : <span class="string">"application/json; charset=utf-8"</span>,</div><div class="line">            dataType : <span class="string">"json"</span>,</div><div class="line">            data : JSON.stringify(delete_date),</div><div class="line">            cache : <span class="literal">false</span>,</div><div class="line">            success : <span class="keyword">function</span>(notes)&#123;</div><div class="line">                console.log(<span class="string">"笔记已经被删除！"</span>);</div><div class="line">                notes=this.notesSort(notes);</div><div class="line">                this.setState(&#123;</div><div class="line">                    notes: notes</div><div class="line">                &#125;);</div><div class="line">            &#125;.bind(this),</div><div class="line">            error : <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">                console.log(<span class="string">"失败..."</span>);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    notesSort(newNotes)&#123;</div><div class="line">        newNotes.reverse();/*将数据库取到的notes倒序排列再显示，即后添加上去的记录在最前面显示*/</div><div class="line">        <span class="built_in">return</span> newNotes;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">        <span class="built_in">return</span>(</div><div class="line">            &lt;div className=<span class="string">"container"</span>&gt;</div><div class="line">                &lt;Notes_header onToggleForm=&#123; this.onToggleForm.bind(this) &#125;/&gt;</div><div class="line">                &lt;div className=<span class="string">"container_main"</span>&gt;</div><div class="line">                    &lt;Notes_form onToggleForm=&#123; this.onToggleForm.bind(this) &#125; </div><div class="line">                    formDisplayed=&#123; this.state.formDisplayed &#125; onNewNote=&#123; this.onNewNote.bind(this) &#125;/&gt;</div><div class="line">                    &lt;Notes_list notes=&#123; this.state.notes &#125; onDeleteNote=&#123; this.onDeleteNote.bind(this) &#125;/&gt;</div><div class="line">                &lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">ReactDOM.render(&lt;Notes/&gt;,document.getElementById(<span class="string">"app"</span>));</div></pre></td></tr></table></figure>
+<p>在这里说一下，在react中父组件和子组件之间如何进行通信呢？父组件和子组件的通信是通过传递props的方式，在props中你可以传递父组件的state，数据，还有各种定义在父组件之中的方法，子组件也通过这种方式传递给子组件的子组件，这也是一直在说的单向数据流；当父组件传递给子组件它的方法时，子组件可以通过回调来实现和父组件的通信，即给传给它的方法传递数据作为参数，父组件的方法在处理子组件传递的数据的过程中来实现与子组件的通信.</p>
+<p>父组件的功能：</p>
+<p>1 在组件DidMounted的时候通过ajax请求notes数据与state绑定实现首次渲染，</p>
+<p>2 将数据，相应的方法分发给个子组件，</p>
+<p>3 实现添加笔记的方法、删除笔记的方法、和切换表单的方法，这么说吧，几乎所有的功能都是在父组件实现的，子组件存在的意义只是在响应这些方法并给这些方法传入一些必要的参数</p>
+<p>添加笔记的方法被触发的时候，发送ajax请求实现数据库数据的更新，再更新组件的state使之数据与后台数据保持一致，state一更新视图也会被重新渲染实现无刷新更新。</p>
+<p>这是头部组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">import React from <span class="string">"react"</span>;</div><div class="line"></div><div class="line">class Notes_header extends React.Component&#123;</div><div class="line">    <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">        <span class="built_in">return</span>(</div><div class="line">            &lt;div className=<span class="string">"header"</span>&gt;</div><div class="line">                &lt;div className=<span class="string">"header_main"</span>&gt;</div><div class="line">                    &lt;h2&gt;React 笔记&lt;/h2&gt;</div><div class="line">                    &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"添加笔记"</span> className=<span class="string">"add_note_btn"</span> onClick=&#123; this.props.onToggleForm &#125;/&gt;</div><div class="line">                &lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">export</span> default Notes_header;</div></pre></td></tr></table></figure>
+<p>这个没什么好说的，前面也说过了，响应父组件的方法，这里是响应父组件的切换表单的方法。</p>
+<p>显示笔记列表的组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">import React from <span class="string">"react"</span>;</div><div class="line">import Notes_item from <span class="string">"./Notes_item.jsx"</span>;</div><div class="line"></div><div class="line">class Notes_list extends React.Component&#123;</div><div class="line">    <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">        var notes=this.props.notes;</div><div class="line">        var notes_items=notes.map( (note,index) =&gt; &#123;</div><div class="line">            <span class="built_in">return</span> &lt;Notes_item key=&#123; index &#125; title=&#123; note.title &#125; description=&#123; note.description &#125; </div><div class="line">                date=&#123; note.date &#125; onDeleteNote=&#123; this.props.onDeleteNote &#125;/&gt;;</div><div class="line">        &#125;);</div><div class="line">        <span class="built_in">return</span>(</div><div class="line">            &lt;div className=<span class="string">"notes_list"</span>&gt;</div><div class="line">                &#123; notes_items &#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">export</span> default Notes_list;</div></pre></td></tr></table></figure>
+<p>这个组件还包含有一个更细的显示每一条笔记内容的组件,组件把父组件传给它的笔记数组，分发给它的子组件，这里是根据笔记数组的长度动态生成这些子组件的，通过数组的map方法，笔记数组有多少条记录就生成多少个这种子组件，并各自传一条记录给它们。</p>
+<p>这是这个组件的子组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">import React from <span class="string">"react"</span>;</div><div class="line"></div><div class="line">class Notes_item extends React.Component&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">handleOver</span></span>()&#123;</div><div class="line">        this.refs.delete.style.display=<span class="string">"block"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">handleOut</span></span>()&#123;</div><div class="line">        this.refs.delete.style.display=<span class="string">"none"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">handleDelete</span></span>()&#123;</div><div class="line">        var date=this.props.date;</div><div class="line">        this.props.onDeleteNote(date);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">        <span class="built_in">return</span>(</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;div className=<span class="string">"notes_item"</span> onMouseOver=&#123; this.handleOver.bind(this) &#125; onMouseOut=&#123; this.handleOut.bind(this) &#125;&gt;</div><div class="line">                    &lt;h4&gt;&#123; this.props.title &#125;&lt;/h4&gt;</div><div class="line">                    &lt;p&gt;&#123; this.props.description &#125;&lt;/p&gt;</div><div class="line">                    &lt;input className=<span class="string">"delete"</span> ref=<span class="string">"delete"</span> <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"删除它"</span> onClick=&#123; this.handleDelete.bind(this) &#125;/&gt;</div><div class="line">                    &lt;span className=<span class="string">"date"</span>&gt;&#123; this.props.date &#125;&lt;/span&gt;</div><div class="line">                &lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">export</span> default Notes_item;</div></pre></td></tr></table></figure>
+<p>拿到笔记记录之后，这个小组件会把记录的每个数据项插入到合适的标签里。</p>
+<p> 最后说一下服务器端吧，用的是nodejs的express框架，这里是主路由模块的各种注册路由，就是各种api啦，react组件就是通过ajax请求这些api来得到相应的数据的，api里面通过识别请求来实现对数据库的相应操作。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var express = require(<span class="string">'express'</span>);</div><div class="line">var router = express.Router();</div><div class="line"></div><div class="line">/* GET home page. */</div><div class="line">router.get(<span class="string">'/'</span>, <span class="keyword">function</span>(req, res, next) &#123;</div><div class="line">    res.render(<span class="string">"index"</span>,&#123; title : <span class="string">"react-note"</span> &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">router.get(<span class="string">'/init'</span>, <span class="keyword">function</span>(req,res,next)&#123;/*请求参数，相应参数和负责把错误信息运送出来的next参数*/</div><div class="line">    var noteModel=global.dbHandle.getModel(<span class="string">"note"</span>);/*获取note数据库模型，模型能直接对数据库进行操作*/</div><div class="line">    noteModel.find(&#123;&#125;,<span class="keyword">function</span>(err,notes)&#123;</div><div class="line">        <span class="keyword">if</span>(err)&#123;</div><div class="line">            <span class="built_in">return</span> next(err);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            res.json(notes);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">router.post(<span class="string">'/addNote'</span>, <span class="keyword">function</span>(req,res,next)&#123;</div><div class="line">    var newNote=req.body;</div><div class="line">    var noteModel=global.dbHandle.getModel(<span class="string">"note"</span>);</div><div class="line">    noteModel.create(newNote,<span class="keyword">function</span>(err)&#123;</div><div class="line">        <span class="keyword">if</span>(err)&#123;</div><div class="line">            <span class="built_in">return</span> next(err);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            console.log(<span class="string">"笔记已经成功写入数据库啦！！！"</span>);</div><div class="line">            noteModel.find(&#123;&#125;,<span class="keyword">function</span>(err,notes)&#123;</div><div class="line">                <span class="keyword">if</span>(err)&#123;</div><div class="line">                    console.log(<span class="string">"咦？是怎么回事呢？"</span>);</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    res.json(notes);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"> router.post(<span class="string">'/deleteNote'</span>, <span class="keyword">function</span>(req,res,next)&#123;</div><div class="line">     var  delete_date=req.body.date;</div><div class="line">     var noteModel=global.dbHandle.getModel(<span class="string">"note"</span>);</div><div class="line">     noteModel.remove(&#123;date : delete_date&#125;,<span class="keyword">function</span>(err)&#123;</div><div class="line">         <span class="keyword">if</span>(err)&#123;</div><div class="line">             <span class="built_in">return</span> next(err);/*错误的话，把错误给运出来*/</div><div class="line">         &#125;<span class="keyword">else</span>&#123;</div><div class="line">             console.log(<span class="string">"笔记已经被你残忍的给删除了..."</span>);</div><div class="line">             noteModel.find(&#123;&#125;,<span class="keyword">function</span>(err,notes)&#123;</div><div class="line">                 <span class="keyword">if</span>(err)&#123;</div><div class="line">                     console.log(<span class="string">"我也不知道怎么回事..."</span>);</div><div class="line">                 &#125;<span class="keyword">else</span>&#123;</div><div class="line">                     res.json(notes);</div><div class="line">                 &#125;</div><div class="line">             &#125;);</div><div class="line">         &#125;</div><div class="line">     &#125;);</div><div class="line"> &#125;);</div><div class="line">module.exports = router;</div></pre></td></tr></table></figure>
+<p>用mongoose操作数据库的</p>
+<p>dbHandle.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var mongoose=require(<span class="string">'mongoose'</span>);</div><div class="line">var models=require(<span class="string">'./models.js'</span>);</div><div class="line">var Schema=mongoose.Schema;</div><div class="line">/*根据已经规划好的数据库模型表定义各种数据库模型，传入必要的模型骨架Schema和模型名（类型）*/</div><div class="line"><span class="keyword">for</span>( var modelName <span class="keyword">in</span> models )&#123;</div><div class="line">    mongoose.model( modelName , new Schema( models[ modelName ] ));</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*传入模型名（类型）获取到相应的模型*/</div><div class="line">module.exports=&#123;</div><div class="line">    getModel : <span class="keyword">function</span>( modelName )&#123;</div><div class="line">        <span class="built_in">return</span> _getModel( modelName );</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var _getModel=<span class="keyword">function</span>( modelName )&#123;</div><div class="line">    <span class="built_in">return</span> mongoose.model( modelName );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总的来说这个数据库操控模块功能就是根据已经有了的数据库模型规划表生成各种实际的<br>数据库模型，并当传入一个数据库模型名给它时，给你返回相应的数据库模型，得到数据库模型你可以去操控数据库</p>
+<p>models.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">module.exports=&#123;</div><div class="line">    note : &#123;</div><div class="line">        title : &#123; <span class="built_in">type</span> : String , required : <span class="literal">true</span> &#125;,</div><div class="line">        description : &#123; <span class="built_in">type</span> : String , required : <span class="literal">true</span> &#125;,</div><div class="line">        date : &#123; <span class="built_in">type</span> : String , required : <span class="literal">true</span> &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这是webpack的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//webpack.config.js</div><div class="line">var path=require(<span class="string">"path"</span>);</div><div class="line"></div><div class="line">module.exports=&#123;</div><div class="line">    entry:  <span class="string">"./public/javascripts/entry.js"</span>,</div><div class="line">    output: &#123;</div><div class="line">        path: path.join(__dirname,<span class="string">"./public/out"</span>), //打包输出的路径</div><div class="line">        filename: <span class="string">"bundle.js"</span>,                  //打包后的名字</div><div class="line">        publicPath: <span class="string">"./public/out/"</span></div><div class="line">    &#125;,</div><div class="line">    //*大于8KB的图片不会被打包，所以一般会被打包的都是一些css文件引入的icon图标或者logo什么的</div><div class="line">    //在对模块捆绑打包的过程中会对文件的后缀名进行检测，然后进行相应的预处理</div><div class="line">    module: &#123;</div><div class="line">              loaders: [</div><div class="line">                    &#123;<span class="built_in">test</span>: /\.js$/, loader: <span class="string">"babel"</span>,query: &#123;presets: [<span class="string">'react'</span>,<span class="string">'es2015'</span>]&#125;&#125;,         /*es6 to es5*/</div><div class="line">                    &#123;<span class="built_in">test</span>: /\.jsx$/,loader: <span class="string">'babel'</span>, query: &#123;presets: [<span class="string">'react'</span>, <span class="string">'es2015'</span>]&#125;&#125;,    /*jsx to js,es5 to es6*/</div><div class="line">                    &#123;<span class="built_in">test</span>: /\.css$/, loader: <span class="string">"style!css"</span>&#125;,                         /*css to css*/</div><div class="line">                    &#123;<span class="built_in">test</span>: /\.(jpg|png|otf)$/, loader: <span class="string">"url?limit=8192"</span>&#125;,                 /*images 打包*/</div><div class="line">                    &#123;<span class="built_in">test</span>: /\.scss$/, loader: <span class="string">"style!css!sass"</span>&#125;                     /*sass to css*/</div><div class="line">              ]</div><div class="line">        &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>webpack的各种加载器本身是不具备各种转译功能的，比如babel加载器，它自己是不能转译jsx文件或者es6的，但是当它检测到jsx或者es6代码的存在的时候，会帮你去调用babel-core还有相应的预设来转译它们。</p>
+<p>我用sass写的样式，所以配置里用了sass加载器，记得要去下载个node-sass模块才能支持sass的转译.</p>
+<p>这里应该是总结</p>
+<p>=&gt;没有总结</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://yoursite.com/2016/02/01/一个用react+nodejs实现的笔记本小应用/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2016/02/01/一个用react+nodejs实现的笔记本小应用/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Nodejs爬虫进阶=&gt;异步并发控制
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/12/09/javascript基于原型实现面向对象 /" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">javascript基于原型实现面向对象</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/02/01/一个用react+nodejs实现的笔记本小应用/" data-title="一个用 react+nodejs 实现的笔记本小应用" data-url="http://yoursite.com/2016/02/01/一个用react+nodejs实现的笔记本小应用/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/29/记、基于react-router的单页应用 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/29/记、基于react-router的单页应用 /" class="title">记、基于react-router的单页应用</a></p>
+                            <p class="item-date"><time datetime="2016-04-29T02:39:00.000Z" itemprop="datePublished">2016-04-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/01/ 冒泡排序算法可视化 /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/04/01/ 冒泡排序算法可视化 /" class="title">冒泡排序算法可视化</a></p>
+                            <p class="item-date"><time datetime="2016-04-01T13:43:00.000Z" itemprop="datePublished">2016-04-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/03/29/ closure！ /" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/03/29/ closure！ /" class="title">closure！</a></p>
+                            <p class="item-date"><time datetime="2016-03-29T10:38:00.000Z" itemprop="datePublished">2016-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/06/Nodejs爬虫进阶 -- 异步并发控制/" class="title">Nodejs爬虫进阶=&gt;异步并发控制</a></p>
+                            <p class="item-date"><time datetime="2016-02-06T04:21:00.000Z" itemprop="datePublished">2016-02-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/02/01/一个用react+nodejs实现的笔记本小应用/" class="title">一个用 react+nodejs 实现的笔记本小应用</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T15:38:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://www.douban.com/people/100011346/">豆瓣</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 晚秋<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kelly'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
